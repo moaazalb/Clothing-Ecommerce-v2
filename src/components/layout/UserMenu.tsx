@@ -22,28 +22,38 @@ interface UserMenuProps {
  */
 export function UserMenu({ displayName, image, onLogout }: UserMenuProps): ReactElement {
   return (
-    <div className="flex flex-row items-center pl-4">
-      {image ? (
-        <Avatar className="mr-2 size-8">
-          <AvatarImage src={image} alt="User avatar" />
-          <AvatarFallback>{displayName.charAt(0)}</AvatarFallback>
-        </Avatar>
-      ) : null}
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <button
-              type="button"
-              className="cursor-pointer font-inter text-sm font-medium leading-none tracking-normal"
-              onClick={onLogout}
-            >
-              Hi {displayName}
-              <span className="sr-only">, sign out</span>
-            </button>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">Sign Out</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    </div>
+     <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            onClick={onLogout}
+            aria-label={`Sign out, ${displayName}`}
+            className="group flex cursor-pointer items-center gap-2 rounded-full transition-colors hover:bg-gray-50"
+          >
+            <Avatar className="size-9 border border-gray-200 sm:size-10">
+              <AvatarImage src={image} alt={displayName} />
+              <AvatarFallback className="bg-zinc-900 text-xs font-semibold text-white">
+                {displayName?.charAt(0)?.toUpperCase() || "U"}
+              </AvatarFallback>
+            </Avatar>
+
+            <div className="hidden flex-col items-start sm:flex">
+              <span className="text-[11px] text-gray-500">
+                Welcome
+              </span>
+
+              <span className="max-w-24 truncate text-sm font-semibold text-zinc-900 transition-colors group-hover:text-gray-500">
+                {displayName}
+              </span>
+            </div>
+          </button>
+        </TooltipTrigger>
+
+        <TooltipContent side="bottom">
+          Sign Out
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 }

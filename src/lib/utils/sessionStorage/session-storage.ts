@@ -4,6 +4,7 @@ import type { z } from "zod";
 export const FILTERED_DATA_KEY = "filteredData";
 export const SINGLE_PRODUCT_KEY = "singleProduct";
 export const AUTH_USER_KEY = "authUser";
+export const CART_STATE_KEY = "cartState";
 
 /**
  * Reads and validates a JSON value from sessionStorage.

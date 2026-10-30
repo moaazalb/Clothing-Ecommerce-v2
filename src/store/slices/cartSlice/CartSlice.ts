@@ -1,11 +1,14 @@
-// lib/store/cartSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { isSameCartItem, roundPrice } from "@/lib/utils/cart/cart";
 import {
   addToCartPayloadSchema,
   cartItemKeySchema,
+  cartStateSchema,
 } from "@/lib/validations/cart.schema";
-import type { AddToCartPayload, CartItemKey } from "@/lib/validations/cart.schema";
+import type {
+  AddToCartPayload,
+  CartItemKey,
+} from "@/lib/validations/cart.schema";
 import type { CartState } from "@/types/cart";
 
 /**
@@ -39,7 +42,6 @@ export const cartSlice = createSlice({
 
       const product = result.data;
       const existing = state.cart.find((item) => isSameCartItem(item, product));
-      // The stored price is used for existing lines so totals always match the line.
       const price = existing?.price ?? product.price;
 
       if (existing) {
@@ -77,8 +79,34 @@ export const cartSlice = createSlice({
       state.totalAmount -= 1;
       state.totalPrice = roundPrice(state.totalPrice - existing.price);
     },
+
+    /**
+     * Restores the cart from validated session data.
+     *
+     * @param {CartState} state - Current state.
+     * @param {PayloadAction<CartState>} action - The saved cart state.
+     * @returns {CartState} The restored cart state.
+     */
+    restoreCart(_state, action: PayloadAction<CartState>) {
+      const result = cartStateSchema.safeParse(action.payload);
+      return result.success ? result.data : getInitialState();
+    },
+
+    /**
+     * Clears all cart items and resets the cart totals.
+     *
+     * @param {CartState} state - Current state.
+     * @returns {CartState} An empty cart state.
+     */
+    clearCart: () => getInitialState(),
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  restoreCart,
+  clearCart,
+} = cartSlice.actions;
+
 export default cartSlice.reducer;

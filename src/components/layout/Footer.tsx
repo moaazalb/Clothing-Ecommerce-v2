@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
@@ -13,27 +14,34 @@ const COPYRIGHT_OWNER = "Moaaz Al-bari";
  * @returns {JSX.Element} The footer.
  */
 export function Footer(): ReactElement {
-   const [year, setYear] = useState<number | null>(null);
+  const [year, setYear] = useState<number | null>(null);
 
   useEffect(() => {
     setYear(new Date().getFullYear());
   }, []);
 
   return (
-    <footer>
-      <div className="flex items-center justify-center">
-        <hr className="h-px w-4/5 border-none bg-gray-400 opacity-50 outline-none" />
-      </div>
-      <div className="flex items-center justify-around pt-4">
-        <div>
-          <Image className="h-20 w-auto" src={logo} alt={`${COPYRIGHT_OWNER} logo`} />
+    <footer className="mt-16 border-t border-gray-200 bg-gray-50">
+      <div className="mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-6 px-6 py-8 sm:flex-row sm:gap-4">
+        {/* Logo */}
+        <div className="flex items-center">
+          <Image
+            className="h-16 w-auto object-contain sm:h-20"
+            src={logo}
+            alt={`${COPYRIGHT_OWNER} logo`}
+          />
         </div>
-        <div>
-          <p className="font-inter text-sm normal-case text-black no-underline">
-            Copyright {year} by {COPYRIGHT_OWNER}
+
+        {/* Copyright */}
+        <div className="text-center sm:text-right">
+          <p className="font-inter text-xs font-medium text-gray-500 sm:text-sm">
+            Copyright © {year ?? "----"} {COPYRIGHT_OWNER}. All rights reserved.
           </p>
         </div>
       </div>
+
+      {/* Bottom accent */}
+      <div className="h-1 w-full bg-gray-800" />
     </footer>
   );
 }

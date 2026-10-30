@@ -23,6 +23,14 @@ export const cartItemSchema = addToCartPayloadSchema.extend({
   totalPrice: z.number().finite().nonnegative(),
 });
 
+/** The complete cart state saved in sessionStorage. */
+export const cartStateSchema = z.object({
+  cart: z.array(cartItemSchema),
+  amount: z.number().int().nonnegative(),
+  totalAmount: z.number().int().nonnegative(),
+  totalPrice: z.number().finite().nonnegative(),
+});
+
 export type CartItemKey = z.infer<typeof cartItemKeySchema>;
 export type AddToCartPayload = z.infer<typeof addToCartPayloadSchema>;
 export type CartItem = z.infer<typeof cartItemSchema>;
