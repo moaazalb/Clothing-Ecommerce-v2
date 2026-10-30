@@ -1,10 +1,20 @@
-// app/layout.tsx
+
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Geist } from "next/font/google";
 import type { ReactElement, ReactNode } from "react";
+
 import { ClientOnly } from "@/components/common/ClientOnly";
 import { StoreProvider } from "@/components/providers/StoreProvider";
+import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+
 import "@/app/globals.css";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,26 +24,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: { default: "Clothing Store", template: "%s | Clothing Store" },
+  title: {
+    default: "Clothing Store",
+    template: "%s | Clothing Store",
+  },
 };
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-/**
- * Root layout: the font, the Redux store, and a gate that renders the pages after hydration.
- *
- * @param {RootLayoutProps} props - Layout props.
- * @param {ReactNode} props.children - The current page.
- * @returns {JSX.Element} The HTML shell.
- */
-export default function RootLayout({ children }: Readonly<RootLayoutProps>): ReactElement {
+export default function RootLayout({
+  children,
+}: Readonly<RootLayoutProps>): ReactElement {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={cn("font-sans", geist.variable)}>
       <body>
         <StoreProvider>
-          <ClientOnly>{children}</ClientOnly>
+          <ClientOnly>
+            <Navbar />
+            {children}
+            <Footer />
+          </ClientOnly>
         </StoreProvider>
       </body>
     </html>

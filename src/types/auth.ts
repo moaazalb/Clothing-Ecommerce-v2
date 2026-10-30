@@ -1,5 +1,5 @@
 // types/auth.ts
-import type { User } from "@/src/lib/validations/auth.schema";
+import type { User } from "@/lib/validations/auth.schema";
 
 export interface AuthState {
   user: User;

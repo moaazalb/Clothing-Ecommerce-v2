@@ -1,9 +1,17 @@
+
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import { loginPayloadSchema, userSchema } from "@/src/lib/validations/auth.schema";
-import type { LoginPayload, User } from "@/src/lib/validations/auth.schema";
+import { loginPayloadSchema, userSchema } from "@/lib/validations/auth.schema";
+import type { LoginPayload, User } from "@/lib/validations/auth.schema";
 import type { AuthState } from "@/types/auth";
-import { AUTH_USER_KEY, clearSession, readSession, removeSession, writeSession } from "@/src/lib/utils/sessionStorage/session-storage";
+
+import {
+  AUTH_USER_KEY,
+  clearSession,
+  readSession,
+  removeSession,
+  writeSession,
+} from "@/lib/utils/sessionStorage/session-storage";
 
 const GUEST_USER: User = {
   name: "",
@@ -11,29 +19,23 @@ const GUEST_USER: User = {
   authUser: false,
 };
 
-/**
- * Builds the initial state, restoring a validated user from sessionStorage when available.
- *
- * @returns {AuthState} The initial auth state (a guest if nothing valid is stored).
- */
-function getInitialState(): AuthState {
-  return {
-    user: readSession(AUTH_USER_KEY, userSchema) ?? { ...GUEST_USER },
-  };
-}
+const initialState: AuthState = {
+  user: { ...GUEST_USER },
+};
 
 export const authSlice = createSlice({
   name: "auth",
-  initialState: getInitialState(),
+  initialState,
+
   reducers: {
-    /**
-     * Logs the user in if the credentials pass validation, otherwise resets to a guest.
-     * The password is checked but never stored.
-     *
-     * @param {AuthState} state - Current state.
-     * @param {PayloadAction<LoginPayload>} action - Name, password and image from the login form.
-     * @returns {void}
-     */
+    // Restore user from sessionStorage after hydration
+    restoreSession(state) {
+      if (typeof window === "undefined") return;
+
+      state.user =
+        readSession(AUTH_USER_KEY, userSchema) ?? { ...GUEST_USER };
+    },
+
     login(state, action: PayloadAction<LoginPayload>) {
       const result = loginPayloadSchema.safeParse(action.payload);
 
@@ -48,16 +50,11 @@ export const authSlice = createSlice({
         image: result.data.image,
         authUser: true,
       };
+
       state.user = user;
       writeSession(AUTH_USER_KEY, user);
     },
 
-    /**
-     * Logs the user out and clears sessionStorage.
-     *
-     * @param {AuthState} state - Current state.
-     * @returns {void}
-     */
     logout(state) {
       state.user = { ...GUEST_USER };
       clearSession();
@@ -65,5 +62,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, restoreSession } = authSlice.actions;
+
 export default authSlice.reducer;

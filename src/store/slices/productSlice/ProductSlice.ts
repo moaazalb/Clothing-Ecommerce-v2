@@ -1,40 +1,38 @@
-// lib/store/productSlice.ts
+
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
 import { storeData } from "@/lib/data/dummyData";
+
 import {
   FILTERED_DATA_KEY,
   SINGLE_PRODUCT_KEY,
   readSession,
   writeSession,
-} from "@/src/lib/utils/sessionStorage/session-storage";
+} from "@/lib/utils/sessionStorage/session-storage";
+
 import {
   filterValueSchema,
   productIdSchema,
   productListSchema,
 } from "@/lib/validations/product.schema";
-import type { Product, ProductId } from "@/lib/validations/product.schema";
+
+import type {
+  Product,
+  ProductId,
+} from "@/lib/validations/product.schema";
+
 import type { ProductState } from "@/types/product";
 
 /**
- * Builds the initial state, restoring validated data from sessionStorage when available.
- *
- * @returns {ProductState} The initial products state.
+ * Static initial state.
+ * Session storage is restored after client hydration.
  */
-function getInitialState(): ProductState {
-  return {
-    filteredProducts: readSession(FILTERED_DATA_KEY, productListSchema) ?? storeData,
-    singleProduct: readSession(SINGLE_PRODUCT_KEY, productListSchema) ?? storeData,
-    error: false,
-  };
-}
+const initialState: ProductState = {
+  filteredProducts: storeData,
+  singleProduct: storeData,
+  error: false,
+};
 
-/**
- * Narrows the current filtered list. An empty result sets the error flag.
- *
- * @param {ProductState} state - The (draft) products state.
- * @param {(product: Product) => boolean} predicate - Keeps matching products.
- * @returns {void}
- */
 function narrowFilteredProducts(
   state: ProductState,
   predicate: (product: Product) => boolean
@@ -49,35 +47,52 @@ function narrowFilteredProducts(
 
   state.error = false;
   state.filteredProducts = result;
-  writeSession(FILTERED_DATA_KEY, result);
+
+  if (typeof window !== "undefined") {
+    writeSession(FILTERED_DATA_KEY, result);
+  }
 }
 
 export const productSlice = createSlice({
   name: "products",
-  initialState: getInitialState(),
+  initialState,
+
   reducers: {
     /**
-     * Filters the full catalog by product type.
-     *
-     * @param {ProductState} state - Current state.
-     * @param {PayloadAction<string>} action - The product type.
-     * @returns {void}
+     * Restore products from sessionStorage after hydration.
+     */
+    restoreProducts(state) {
+      if (typeof window === "undefined") return;
+
+      state.filteredProducts =
+        readSession(FILTERED_DATA_KEY, productListSchema) ?? storeData;
+
+      state.singleProduct =
+        readSession(SINGLE_PRODUCT_KEY, productListSchema) ?? storeData;
+
+      state.error = false;
+    },
+
+    /**
+     * Filters products by type.
      */
     filterProducts(state, action: PayloadAction<string>) {
       if (!filterValueSchema.safeParse(action.payload).success) return;
 
-      const result = storeData.filter((product) => product.type === action.payload);
+      const result = storeData.filter(
+        (product) => product.type === action.payload
+      );
+
       state.filteredProducts = result;
       state.error = false;
-      writeSession(FILTERED_DATA_KEY, result);
+
+      if (typeof window !== "undefined") {
+        writeSession(FILTERED_DATA_KEY, result);
+      }
     },
 
     /**
-     * Selects one product by id from the filtered list.
-     *
-     * @param {ProductState} state - Current state.
-     * @param {PayloadAction<ProductId>} action - The product id.
-     * @returns {void}
+     * Selects one product by ID.
      */
     singleProduct(state, action: PayloadAction<ProductId>) {
       if (!productIdSchema.safeParse(action.payload).success) return;
@@ -85,27 +100,28 @@ export const productSlice = createSlice({
       const result = state.filteredProducts.filter(
         (product) => product.id === action.payload
       );
+
       state.singleProduct = result;
-      writeSession(SINGLE_PRODUCT_KEY, result);
+
+      if (typeof window !== "undefined") {
+        writeSession(SINGLE_PRODUCT_KEY, result);
+      }
     },
 
     /**
-     * Narrows the filtered list by gender.
-     *
-     * @param {ProductState} state - Current state.
-     * @param {PayloadAction<string>} action - The gender.
-     * @returns {void}
+     * Filters products by gender.
      */
     filterGender(state, action: PayloadAction<string>) {
       if (!filterValueSchema.safeParse(action.payload).success) return;
-      narrowFilteredProducts(state, (product) => product.gender === action.payload);
+
+      narrowFilteredProducts(
+        state,
+        (product) => product.gender === action.payload
+      );
     },
 
     /**
-     * Sorts the filtered list by price, highest first.
-     *
-     * @param {ProductState} state - Current state.
-     * @returns {void}
+     * Sorts products by price, highest first.
      */
     sortByPrice(state) {
       if (state.filteredProducts.length === 0) {
@@ -113,33 +129,36 @@ export const productSlice = createSlice({
         return;
       }
 
-      const sorted = [...state.filteredProducts].sort((a, b) => b.price - a.price);
+      const sorted = [...state.filteredProducts].sort(
+        (a, b) => b.price - a.price
+      );
+
       state.error = false;
       state.filteredProducts = sorted;
-      writeSession(FILTERED_DATA_KEY, sorted);
+
+      if (typeof window !== "undefined") {
+        writeSession(FILTERED_DATA_KEY, sorted);
+      }
     },
 
     /**
-     * Narrows the filtered list by color.
-     *
-     * @param {ProductState} state - Current state.
-     * @param {PayloadAction<string>} action - The color.
-     * @returns {void}
+     * Filters products by color.
      */
     filterByColor(state, action: PayloadAction<string>) {
       if (!filterValueSchema.safeParse(action.payload).success) return;
-      narrowFilteredProducts(state, (product) => product.color.includes(action.payload));
+
+      narrowFilteredProducts(
+        state,
+        (product) => product.color.includes(action.payload)
+      );
     },
 
     /**
-     * Narrows the filtered list by size. Products without sizes (bags) never match.
-     *
-     * @param {ProductState} state - Current state.
-     * @param {PayloadAction<string>} action - The size.
-     * @returns {void}
+     * Filters products by size.
      */
     filterBySize(state, action: PayloadAction<string>) {
       if (!filterValueSchema.safeParse(action.payload).success) return;
+
       narrowFilteredProducts(
         state,
         (product) => product.size?.includes(action.payload) ?? false
@@ -149,6 +168,7 @@ export const productSlice = createSlice({
 });
 
 export const {
+  restoreProducts,
   filterProducts,
   singleProduct,
   filterGender,

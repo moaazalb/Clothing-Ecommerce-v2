@@ -7,8 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { SliderArrowButton } from "@/components/slider/SliderArrowButton";
 import { SliderDots } from "@/components/slider/SliderDots";
 import { sliderData } from "@/lib/data/dummyData";
-import { selectSlideIndex } from "@/src/store/selectors/sliderSelectors";
-import { dotSlide, nextSlide, prevSlide } from "@/src/store/slices/sliderSlice/SliderSlice";
+import { selectSlideIndex } from "@/store/selectors/sliderSelectors";
+import { dotSlide, nextSlide, prevSlide } from "@/store/slices/sliderSlice/SliderSlice";
 
 const ACTIVE_SLIDE_CLASS = "scale-100 opacity-100 duration-700 ease-in-out";
 const INACTIVE_SLIDE_CLASS = "scale-95 opacity-0 duration-700 ease-in-out";

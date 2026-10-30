@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { ErrorMessage } from "@/components/common/ErrorMessage";
 import { FilterBar } from "@/components/products/FilterBar";
 import { ProductCard } from "@/components/products/ProductCard";
-import { selectFilteredProducts, selectProductsError } from "@/src/store/selectors/productSelectors";
+import { selectFilteredProducts, selectProductsError } from "@/store/selectors/productSelectors";
 import type { ProductType } from "@/lib/validations/product.schema";
 
 interface FilteredProductsProps {

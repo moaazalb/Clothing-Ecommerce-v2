@@ -5,7 +5,7 @@ import { useState } from "react";
 import type { ReactElement } from "react";
 import { useSelector } from "react-redux";
 import { Cart } from "@/components/cart/Cart";
-import { selectCartTotalAmount } from "@/src/store/selectors/cartSelectors";
+import { selectCartTotalAmount } from "@/store/selectors/cartSelectors";
 
 const TEXT_CLASS = "font-inter text-base font-medium leading-none tracking-normal text-center";
 

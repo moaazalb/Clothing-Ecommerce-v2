@@ -140,7 +140,7 @@ describe("cartSlice", () => {
 
     it("uses the stored price, not the payload price", () => {
       const twice = reducer(reducer(EMPTY, addToCart(ITEM)), addToCart(ITEM));
-      const state = reducer(twice, removeFromCart({ ...ITEM, price: 1 }));
+      const state = reducer(twice, removeFromCart({ ...ITEM, price: 1 } as any));
       expect(state.totalPrice).toBe(45);
     });
 

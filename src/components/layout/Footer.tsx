@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import type { ReactElement } from "react";
-import logo from "@/public/assets/images/logo.png";
+import logo from "../../../public/assets/images/logo.png";
 
 const COPYRIGHT_OWNER = "Moaaz Al-bari";
 
@@ -11,7 +13,11 @@ const COPYRIGHT_OWNER = "Moaaz Al-bari";
  * @returns {JSX.Element} The footer.
  */
 export function Footer(): ReactElement {
-  const year = new Date().getFullYear();
+   const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
 
   return (
     <footer>

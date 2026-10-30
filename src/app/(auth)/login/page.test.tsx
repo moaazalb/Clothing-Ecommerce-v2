@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
-import authReducer from "@/src/store/slices/authSlice/AuthSlice";
+import authReducer from "@/store/slices/authSlice/AuthSlice";
 import LoginPage, { metadata } from "./page";
 
 describe("LoginPage", () => {

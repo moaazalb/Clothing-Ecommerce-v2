@@ -4,10 +4,10 @@
 import Image from "next/image";
 import type { ReactElement } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import logo from "@/public/assets/images/logo.png";
+import logo from "../../../public/assets/images/logo.png";
 import { CartButton } from "@/components/cart/CartButton";
 import { UserMenu } from "@/components/layout/UserMenu";
-import { selectUser } from "@/src/store/selectors/authSelectors";
+import { selectUser } from "@/store/selectors/authSelectors";
 import { logout } from "@/store/slices/authSlice/AuthSlice";
 import { capitalizeFirst } from "@/lib/utils/string/string";
 

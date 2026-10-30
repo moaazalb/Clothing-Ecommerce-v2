@@ -1,5 +1,5 @@
 import reducer, { login, logout } from "./AuthSlice";
-import type { LoginPayload } from "@/src/lib/validations/auth.schema";
+import type { LoginPayload } from "@/lib/validations/auth.schema";
 
 const VALID_LOGIN: LoginPayload = { name: "John", password: "abc1!", image: "/john.jpg" };
 const GUEST = { name: "", image: "", authUser: false };

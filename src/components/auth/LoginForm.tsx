@@ -8,9 +8,9 @@ import { useDispatch } from "react-redux";
 import { FormField } from "@/components/forms/FormField";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { login } from "@/src/store/slices/authSlice/AuthSlice";
-import { loginFormSchema } from "@/src/lib/validations/auth.schema";
-import type { LoginFormValues } from "@/src/lib/validations/auth.schema";
+import { login } from "@/store/slices/authSlice/AuthSlice";
+import { loginFormSchema } from "@/lib/validations/auth.schema";
+import type { LoginFormValues } from "@/lib/validations/auth.schema";
 
 const DEFAULT_VALUES: LoginFormValues = { name: "", password: "", image: "" };
 

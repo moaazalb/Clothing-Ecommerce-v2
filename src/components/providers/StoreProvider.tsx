@@ -1,26 +1,56 @@
-// components/providers/StoreProvider.tsx
+
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ReactElement, ReactNode } from "react";
-import { Provider } from "react-redux";
+
+import { Provider, useDispatch } from "react-redux";
+
 import { makeStore } from "@/store/store";
-import type { AppStore } from "@/store/store";
+
+import type {
+  AppStore,
+  AppDispatch,
+} from "@/store/store";
+
+import { restoreSession } from "@/store/slices/authSlice/AuthSlice";
+import { restoreProducts } from "@/store/slices/productSlice/ProductSlice";
+
 
 interface StoreProviderProps {
   children: ReactNode;
 }
 
-/**
- * Gives the whole app the Redux store. The store is created once per mount,
- * not once per render.
- *
- * @param {StoreProviderProps} props - Component props.
- * @param {ReactNode} props.children - The app.
- * @returns {JSX.Element} The provider.
- */
-export function StoreProvider({ children }: StoreProviderProps): ReactElement {
-  const [store] = useState<AppStore>(makeStore);
+function StateInitializer() {
+  const dispatch = useDispatch<AppDispatch>();
 
-  return <Provider store={store}>{children}</Provider>;
+  useEffect(() => {
+    dispatch(restoreSession());
+    dispatch(restoreProducts());
+  }, [dispatch]);
+
+  return null;
+}
+
+export function StoreProvider({
+  children,
+}: StoreProviderProps): ReactElement | null {
+  const [store, setStore] = useState<AppStore | null>(null);
+
+  useEffect(() => {
+    const newStore = makeStore();
+    setStore(newStore);
+  }, []);
+
+  // Wait until Redux store is initialized on the client.
+  if (!store) {
+    return null;
+  }
+
+  return (
+    <Provider store={store}>
+      <StateInitializer />
+      {children}
+    </Provider>
+  );
 }

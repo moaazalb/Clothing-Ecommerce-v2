@@ -1,6 +1,6 @@
 // lib/store/cartSlice.ts
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import { isSameCartItem, roundPrice } from "@/src/lib/utils/cart/cart";
+import { isSameCartItem, roundPrice } from "@/lib/utils/cart/cart";
 import {
   addToCartPayloadSchema,
   cartItemKeySchema,

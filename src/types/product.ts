@@ -1,6 +1,6 @@
 // types/product.ts
 import type { StaticImageData } from "next/image";
-import type { Product } from "@/src/lib/validations/product.schema";
+import type { Product } from "@/lib/validations/product.schema";
 
 export interface ProductState {
   filteredProducts: Product[];

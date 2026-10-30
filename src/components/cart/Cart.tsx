@@ -13,9 +13,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { removeFromCart } from "@/src/store/slices/cartSlice/CartSlice";
-import { selectCartItems, selectCartTotalPrice } from "@/src/store/selectors/cartSelectors";
-import { getCartItemKey } from "@/src/lib/utils/cart/cart";
+import { removeFromCart } from "@/store/slices/cartSlice/CartSlice";
+import { selectCartItems, selectCartTotalPrice } from "@/store/selectors/cartSelectors";
+import { getCartItemKey } from "@/lib/utils/cart/cart";
 import type { CartItemKey } from "@/lib/validations/cart.schema";
 
 interface CartProps {
