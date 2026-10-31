@@ -13,23 +13,44 @@ const BANNER_TEXT = "SALES UP TO 50%";
  */
 export function SalesBanner(): ReactElement {
   return (
-    <section aria-labelledby="sales-banner-title">
-      <div className="mx-auto w-[55%] rounded-md bg-black p-2">
-        <h2
-          id="sales-banner-title"
-          className="text-center font-inter text-lg font-bold leading-none tracking-normal text-red-600"
-        >
-          {BANNER_TEXT}
-        </h2>
+  <section aria-labelledby="sales-banner-title" className="w-full px-4 sm:px-6 lg:px-8">
+     <div className="mx-auto w-full max-w-3xl rounded-lg border border-[#D6B58A] bg-[#4B3621] p-3 shadow-sm sm:p-4">
+      <h2
+        id="sales-banner-title"
+        className="
+          text-center
+          font-inter
+          text-base
+          font-bold
+          leading-relaxed
+          tracking-normal
+          text-[#F8F4ED]
+          sm:text-lg
+          md:text-xl
+        "
+      >
+      {BANNER_TEXT}
+       </h2>
       </div>
-      <div className="flex items-center justify-center py-4">
-        <Image
-          className="h-[600px] w-[70%] rounded-md shadow-lg shadow-gray-600"
-          src={clothes}
-          alt="Clothes collection"
-          sizes="70vw"
-        />
-      </div>
+
+  <div className="flex w-full items-center justify-center py-5 sm:py-7">
+    <Image
+      className="
+        h-auto
+        w-full
+        max-w-6xl
+        rounded-lg
+        object-cover
+        shadow-lg
+        shadow-[#4B3621]/20
+        sm:w-[90%]
+        lg:w-[85%]
+      "
+      src={clothes}
+      alt="Clothes collection"
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 85vw"
+    />
+  </div>
     </section>
   );
 }

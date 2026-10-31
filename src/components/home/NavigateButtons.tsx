@@ -29,23 +29,38 @@ export function NavigateButtons(): ReactElement {
   };
 
   return (
-    <nav aria-label="Product categories" className="py-8">
-      <ul className="flex items-center justify-center">
-        {NAVIGATION_PRODUCT_TYPES.map((type) => (
-          <li key={type} className="mr-4">
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="text-black duration-300 ease-in-out hover:bg-gray-300"
-            >
-              <Link href={`/products/${encodeURIComponent(type)}`} onClick={() => handleSelect(type)}>
-                {type}
-              </Link>
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+   <nav aria-label="Product categories" className="py-8">
+  <ul className="flex flex-wrap items-center justify-center gap-3">
+    {NAVIGATION_PRODUCT_TYPES.map((type) => (
+      <li key={type}>
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="
+            border-[#D6B58A]
+            bg-[#F8F4ED]
+            text-[#4B3621]
+            shadow-sm
+            transition-all duration-300 ease-in-out
+            hover:border-[#A87945]
+            hover:bg-[#A87945]
+            hover:text-white
+            focus-visible:ring-2
+            focus-visible:ring-[#A87945]
+            focus-visible:ring-offset-2
+          "
+        >
+          <Link
+            href={`/products/${encodeURIComponent(type)}`}
+            onClick={() => handleSelect(type)}
+          >
+            {type}
+          </Link>
+        </Button>
+      </li>
+    ))}
+  </ul>
+</nav>
   );
 }

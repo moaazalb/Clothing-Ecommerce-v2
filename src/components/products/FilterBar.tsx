@@ -86,28 +86,49 @@ export function FilterBar({ type }: FilterBarProps): ReactElement {
 
   return (
     <div
-      role="group"
-      aria-label="Product filters"
-      className="flex items-center justify-between py-8"
-    >
-      <div className="flex items-center">
-        {GENDER_OPTIONS.map((gender) => (
-          <FilterButton key={gender} onClick={() => handleGender(gender)}>
-            {gender}
-          </FilterButton>
-        ))}
-        <FilterButton onClick={handleSortByPrice}>High Price</FilterButton>
-        <FilterMenu label="Select a color" options={COLOR_OPTIONS} onSelect={handleColor} isColorMenu />
-        <FilterMenu
-          label="Select a size"
-          options={SIZE_OPTIONS}
-          onSelect={handleSize}
-          isDisabled={isSizeDisabled}
-        />
-      </div>
-      <div className="pr-14">
-        <FilterButton onClick={handleClear}>Clear Filter</FilterButton>
-      </div>
-    </div>
+  role="group"
+  aria-label="Product filters"
+  className="
+    flex w-full flex-col gap-5
+    py-6
+    sm:py-8
+    lg:flex-row lg:items-center lg:justify-between
+  "
+>
+  <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+    {GENDER_OPTIONS.map((gender) => (
+      <FilterButton
+        key={gender}
+        onClick={() => handleGender(gender)}
+      >
+        {gender}
+      </FilterButton>
+    ))}
+
+    <FilterButton onClick={handleSortByPrice}>
+      High Price
+    </FilterButton>
+
+    <FilterMenu
+      label="Select a color"
+      options={COLOR_OPTIONS}
+      onSelect={handleColor}
+      isColorMenu
+    />
+
+    <FilterMenu
+      label="Select a size"
+      options={SIZE_OPTIONS}
+      onSelect={handleSize}
+      isDisabled={isSizeDisabled}
+    />
+  </div>
+
+  <div className="flex justify-end lg:shrink-0">
+    <FilterButton onClick={handleClear}>
+      Clear Filter
+    </FilterButton>
+  </div>
+</div>
   );
 }

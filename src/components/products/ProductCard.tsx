@@ -1,4 +1,3 @@
-
 "use client";
 
 import Image from "next/image";
@@ -33,23 +32,32 @@ export function ProductCard({
   const slug = params?.slug;
 
   const card = (
-    <Card className="w-96 gap-0 py-0">
-      <div className="relative mx-4 -mt-6 h-96 overflow-hidden rounded-xl bg-blue-500 bg-clip-border shadow-lg shadow-blue-500/40">
+    <Card className="w-full max-w-sm gap-0 overflow-hidden rounded-xl border border-[#E8D8C3] bg-white py-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#4B3621]/10">
+      <div className="relative mx-3 mt-3 aspect-square overflow-hidden rounded-lg bg-[#F8F4ED] sm:mx-4 sm:mt-4">
         <Image
-          className="h-full w-full"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
           src={img}
           alt={name}
-          sizes="384px"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
       </div>
 
-      <CardContent className="py-6 text-center">
-        <h2 className="mb-2 text-xl font-semibold">{name}</h2>
-        <p>{text}</p>
+      <CardContent className="px-4 py-4 text-center sm:py-5">
+        <h2 className="mb-2 line-clamp-1 text-lg font-semibold text-[#4B3621] sm:text-xl">
+          {name}
+        </h2>
+
+        <p className="line-clamp-2 text-sm leading-relaxed text-[#806B56] sm:text-base">
+          {text}
+        </p>
       </CardContent>
 
-      <CardFooter className="flex items-center justify-between border-t py-3">
-        <p className="text-sm">{price}$</p>
+      <CardFooter className="flex items-center justify-between gap-2 border-t border-[#E8D8C3] bg-[#F8F4ED]/50 px-4 py-3">
+        <p className="text-base font-bold text-[#A87945]">
+          {price}$
+        </p>
+
         <ColorSwatches colors={colors} />
       </CardFooter>
     </Card>
@@ -63,6 +71,7 @@ export function ProductCard({
     <Link
       href={`/products/${encodeURIComponent(slug)}/${encodeURIComponent(String(id))}`}
       aria-label={`View ${name}`}
+      className="block w-full"
     >
       {card}
     </Link>

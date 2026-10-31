@@ -16,17 +16,29 @@ export function ColorSwatches({ colors }: ColorSwatchesProps): ReactElement | nu
   if (!colors || colors.length === 0) return null;
 
   return (
-    <ul aria-label="Available colors" className="flex gap-1">
-      {colors.map((color) => (
-        <li key={color}>
-          <span
-            role="img"
-            aria-label={`Color ${color}`}
-            className="mr-4 mt-[3px] inline-block size-6 rounded-full"
-            style={{ backgroundColor: color }}
-          />
-        </li>
-      ))}
-    </ul>
+    <ul
+  aria-label="Available colors"
+  className="flex flex-wrap items-center gap-2 sm:gap-3"
+  >
+  {colors.map((color) => (
+    <li key={color}>
+      <span
+        role="img"
+        aria-label={`Color ${color}`}
+        className="
+          inline-block
+          size-5
+          rounded-full
+          border border-[#D6B58A]
+          shadow-sm
+          transition-transform duration-200
+          hover:scale-110
+          sm:size-6
+        "
+        style={{ backgroundColor: color }}
+      />
+    </li>
+  ))}
+  </ul>
   );
 }

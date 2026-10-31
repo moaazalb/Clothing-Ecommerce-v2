@@ -27,13 +27,13 @@ const handleLogout = (): void => {
   router.replace("/");
 };
 
-  return (
-    <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
+   return (
+    <header className="sticky top-0 z-50 w-full bg-white shadow-[0_4px_20px_-12px_rgba(75,54,33,0.25)]">
       {/* Welcome Bar */}
-      <div className="bg-zinc-950 px-4 py-2 text-center text-xs text-white sm:text-sm">
+      <div className="bg-[#4B3621] px-4 py-2 text-center text-xs text-[#F8F4ED] sm:text-sm">
         <p>
           Welcome back,
-          <span className="ml-1 font-semibold text-white">
+          <span className="ml-1 font-semibold text-[#D6B58A]">
             {displayName}
           </span>
         </p>
@@ -42,7 +42,7 @@ const handleLogout = (): void => {
       {/* Main Navbar */}
       <nav
         aria-label="Main navigation"
-        className="border-b border-gray-100"
+        className="border-b border-[#E8D8C3]/70 bg-white"
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           {/* Logo */}
@@ -61,7 +61,7 @@ const handleLogout = (): void => {
             <button
               type="button"
               aria-label="Wishlist"
-              className="group flex cursor-pointer items-center gap-2 text-zinc-700 transition-colors hover:text-black"
+              className="group flex cursor-pointer items-center gap-2 text-[#806B56] transition-colors duration-200 hover:text-[#A87945]"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +69,7 @@ const handleLogout = (): void => {
                 viewBox="0 0 24 24"
                 stroke="currentColor"
                 strokeWidth="1.6"
-                className="size-6 transition-transform group-hover:scale-110"
+                className="size-6 transition-transform duration-200 group-hover:scale-110"
                 aria-hidden="true"
               >
                 <path
@@ -85,10 +85,12 @@ const handleLogout = (): void => {
             </button>
 
             {/* Cart */}
-            <CartButton />
+            <div className="text-[#4B3621] transition-colors [&_button:hover]:text-[#A87945]">
+              <CartButton />
+            </div>
 
             {/* User */}
-            <div className="border-l border-gray-200 pl-3 sm:pl-5">
+            <div className="border-l border-[#E8D8C3] pl-3 sm:pl-5">
               <UserMenu
                 displayName={displayName}
                 image={image}
@@ -100,11 +102,11 @@ const handleLogout = (): void => {
       </nav>
 
       {/* Shipping Announcement */}
-      <div className="bg-zinc-100 px-4 py-2.5 text-center">
-        <p className="text-xs font-medium tracking-wide text-zinc-700 sm:text-sm">
-          <span className="mr-2">✦</span>
+      <div className="bg-[#F8F4ED] px-4 py-2.5 text-center">
+        <p className="text-xs font-medium tracking-wide text-[#806B56] sm:text-sm">
+          <span className="mr-2 text-[#A87945]">✦</span>
           Free shipping and returns on all orders
-          <span className="ml-2">✦</span>
+          <span className="ml-2 text-[#A87945]">✦</span>
         </p>
       </div>
     </header>

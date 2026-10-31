@@ -54,47 +54,75 @@ export function Slider(): ReactElement | null {
   };
 
   return (
-    <section
-      aria-roledescription="carousel"
-      aria-label="Featured shoes"
-      className="relative pb-4"
-    >
-      <div>
-        {sliderData.map((item, index) => {
-          const isActive = index === slideIndex;
+   <section
+  aria-roledescription="carousel"
+  aria-label="Featured shoes"
+  className="relative w-full overflow-hidden pb-6"
+>
+  <div>
+    {sliderData.map((item, index) => {
+      const isActive = index === slideIndex;
 
-          return (
-            <div
-              key={item.id}
-              role="group"
-              aria-roledescription="slide"
-              aria-label={`${index + 1} of ${sliderData.length}`}
-              aria-hidden={!isActive}
-              className={isActive ? ACTIVE_SLIDE_CLASS : INACTIVE_SLIDE_CLASS}
+      return (
+        <div
+          key={item.id}
+          role="group"
+          aria-roledescription="slide"
+          aria-label={`${index + 1} of ${sliderData.length}`}
+          aria-hidden={!isActive}
+          className={isActive ? ACTIVE_SLIDE_CLASS : INACTIVE_SLIDE_CLASS}
+        >
+          <div className="relative w-full">
+            {isActive && (
+              <Image
+                className="
+                  h-[420px]
+                  w-full
+                  object-cover
+                  sm:h-[550px]
+                  md:h-[650px]
+                  lg:h-[750px]
+                  xl:h-[800px]
+                "
+                src={item.img}
+                alt={`Shoes, slide ${index + 1} of ${sliderData.length}`}
+                sizes="100vw"
+                priority={index === 0}
+              />
+            )}
+          </div>
+
+          <div className="absolute inset-x-4 top-1/2 mx-auto max-w-4xl -translate-y-1/2 text-center sm:inset-x-8">
+            <p
+              className="
+                font-inter
+                text-2xl
+                font-bold
+                leading-snug
+                tracking-normal
+                text-white
+                drop-shadow-lg
+                sm:text-3xl
+                md:text-4xl
+                lg:text-5xl
+              "
             >
-              <div>
-                {isActive && (
-                  <Image
-                    className="h-[850px] w-full"
-                    src={item.img}
-                    alt={`Shoes, slide ${index + 1} of ${sliderData.length}`}
-                    sizes="100vw"
-                    priority={index === 0}
-                  />
-                )}
-              </div>
-              <div className="absolute inset-x-1/4 top-44 mx-auto">
-                <p className="font-inter text-4xl font-bold leading-none tracking-normal text-white">
-                  {isActive && item.text}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <SliderDots slides={sliderData} activeIndex={slideIndex} onSelect={handleSelect} />
-      <SliderArrowButton direction="next" onClick={handleNext} />
-      <SliderArrowButton direction="prev" onClick={handlePrevious} />
-    </section>
+              {isActive && item.text}
+            </p>
+          </div>
+        </div>
+      );
+    })}
+  </div>
+
+  <SliderDots
+    slides={sliderData}
+    activeIndex={slideIndex}
+    onSelect={handleSelect}
+  />
+
+  <SliderArrowButton direction="next" onClick={handleNext} />
+  <SliderArrowButton direction="prev" onClick={handlePrevious} />
+</section>
   );
 }

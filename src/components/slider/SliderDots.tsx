@@ -21,22 +21,30 @@ interface SliderDotsProps {
  */
 export function SliderDots({ slides, activeIndex, onSelect }: SliderDotsProps): ReactElement {
   return (
-    <div className="absolute bottom-12 left-[45%] flex">
-      {slides.map((slide, index) => (
-        <div className="mr-4" key={slide.id}>
-          <button
-            type="button"
-            aria-label={`Go to slide ${index + 1}`}
-            aria-current={index === activeIndex ? "true" : undefined}
-            className={
-              index === activeIndex
-                ? "cursor-pointer rounded-full bg-green-300 p-2"
-                : "cursor-pointer rounded-full bg-white p-2"
-            }
-            onClick={() => onSelect(index)}
-          />
-        </div>
-      ))}
+    <div className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3 sm:bottom-8 sm:gap-4">
+  {slides.map((slide, index) => (
+    <div key={slide.id}>
+      <button
+        type="button"
+        aria-label={`Go to slide ${index + 1}`}
+        aria-current={index === activeIndex ? "true" : undefined}
+        className={`
+          cursor-pointer rounded-full
+          border transition-all duration-300 ease-in-out
+          focus-visible:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-[#A87945]
+          focus-visible:ring-offset-2
+          ${
+            index === activeIndex
+              ? "h-3 w-7 border-[#A87945] bg-[#A87945] sm:w-8"
+              : "h-3 w-3 border-[#D6B58A] bg-[#F8F4ED]/90 hover:bg-[#D6B58A]"
+          }
+        `}
+        onClick={() => onSelect(index)}
+      />
     </div>
+  ))}
+</div>
   );
 }

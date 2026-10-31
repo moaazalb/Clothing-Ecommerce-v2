@@ -27,35 +27,73 @@ export function FilteredProducts({ type }: FilteredProductsProps): ReactElement 
   const visibleProducts = products.filter((product) => product.type === type);
 
   return (
-    <section className="pt-16">
-      <div className="pl-14">
-        <h1 className="font-inter text-4xl font-bold leading-none tracking-normal text-gray-600">
-          {type}
-        </h1>
-        <FilterBar type={type} />
-      </div>
-      {hasError ? (
-        <ErrorMessage />
-      ) : visibleProducts.length === 0 ? (
-        <p role="status" className="py-8 text-center font-inter text-base">
-          No products found
-        </p>
-      ) : (
-        <ul className="grid grid-cols-4 justify-items-center gap-12 py-8">
-          {visibleProducts.map((product) => (
-            <li key={product.id}>
-              <ProductCard
-                id={product.id}
-                name={product.name}
-                text={product.text}
-                img={product.img}
-                price={product.price}
-                colors={product.color}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
+   <section className="w-full pt-8 sm:pt-12 lg:pt-16">
+    <div className="px-4 sm:px-6 lg:px-10 xl:px-14">
+    <h1
+      className="
+        mb-5
+        font-inter
+        text-2xl
+        font-bold
+        leading-tight
+        tracking-normal
+        text-[#4B3621]
+        sm:text-3xl
+        lg:text-4xl
+      "
+    >
+      {type}
+    </h1>
+
+    <FilterBar type={type} />
+  </div>
+
+  {hasError ? (
+    <ErrorMessage />
+  ) : visibleProducts.length === 0 ? (
+    <p
+      role="status"
+      className="
+        py-12
+        text-center
+        font-inter
+        text-base
+        text-[#806B56]
+        sm:text-lg
+      "
+    >
+      No products found
+    </p>
+  ) : (
+    <ul
+  className="
+    grid
+    grid-cols-1
+    justify-items-center
+    gap-6
+    px-4
+    py-8
+    sm:grid-cols-2
+    sm:gap-6
+    lg:grid-cols-4
+    lg:gap-6
+    xl:gap-10
+  "
+>
+  {visibleProducts.map((product) => (
+    <li key={product.id} className="w-full min-w-0 max-w-sm">
+      <ProductCard
+        id={product.id}
+        name={product.name}
+        text={product.text}
+        img={product.img}
+        price={product.price}
+        colors={product.color}
+      />
+    </li>
+  ))}
+</ul>
+  )}
+</section>
   );
 }

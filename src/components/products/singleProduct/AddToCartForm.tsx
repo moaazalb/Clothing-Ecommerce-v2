@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { ProductOptionSelect } from "@/components/products/singleProduct/ProductOptionSelect";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { addToCart } from "@/store/slices/cartSlice/CartSlice";
 import type { Product } from "@/lib/validations/product.schema";
 import {
@@ -64,34 +63,43 @@ export function AddToCartForm({ product }: AddToCartFormProps): ReactElement {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate>
-      <ProductOptionSelect
-        id="size"
-        label="Pick a size"
-        options={sizes}
-        registration={hasSizes ? register("size") : undefined}
-        isDisabled={!hasSizes}
-        error={errors.size?.message}
-      />
-      <ProductOptionSelect
-        id="color"
-        label="Pick a color"
-        options={product.color}
-        registration={register("color")}
-        error={errors.color?.message}
-      />
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <span className="inline-block">
-              <Button type="submit" variant="outline" size="lg" disabled={!isValid || isSubmitting}>
-                Add to Cart
-              </Button>
-            </span>
-          </TooltipTrigger>
-          <TooltipContent side="bottom">Add to Cart</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      className="flex w-full flex-col gap-5"
+    >
+      <div className="flex w-full flex-col gap-4 sm:flex-row sm:items-start sm:gap-5">
+        <div className="w-full min-w-0 flex-1">
+          <ProductOptionSelect
+            id="size"
+            label="Pick a size"
+            options={sizes}
+            registration={hasSizes ? register("size") : undefined}
+            isDisabled={!hasSizes}
+            error={errors.size?.message}
+          />
+        </div>
+
+        <div className="w-full min-w-0 flex-1">
+          <ProductOptionSelect
+            id="color"
+            label="Pick a color"
+            options={product.color}
+            registration={register("color")}
+            error={errors.color?.message}
+          />
+        </div>
+      </div>
+
+      <Button
+        type="submit"
+        variant="outline"
+        size="lg"
+        disabled={!isValid || isSubmitting}
+        className="w-full border-[#A87945] bg-[#A87945] px-8 font-semibold text-white shadow-sm transition-all duration-300 hover:border-[#4B3621] hover:bg-[#4B3621] hover:text-white focus-visible:ring-2 focus-visible:ring-[#A87945] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:border-[#D6B58A] disabled:bg-[#E8D8C3] disabled:text-[#806B56] sm:w-auto"
+      >
+        Add to Cart
+      </Button>
     </form>
   );
 }

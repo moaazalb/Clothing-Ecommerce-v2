@@ -50,51 +50,81 @@ export function ProductSectionItem({ product }: ProductSectionItemProps): ReactE
   };
 
   return (
-    <Card className="relative w-96 gap-0 py-0">
-      <p className="absolute right-8 top-12 z-10 mb-2 -rotate-45 text-2xl font-semibold text-red-700">
+    <Card className="relative w-full max-w-sm gap-0 overflow-hidden rounded-xl border border-[#E8D8C3] bg-white py-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#4B3621]/10">
+      <div className="absolute right-3 top-5 z-10 -rotate-45 rounded-sm bg-[#A87945] px-4 py-1 text-sm font-bold text-white shadow-md sm:right-5 sm:top-6 sm:text-base">
         SALE%
-      </p>
-      <div className="h-96 w-full overflow-hidden rounded-t-xl">
+      </div>
+
+      <div className="relative aspect-square w-full overflow-hidden bg-[#F8F4ED]">
         <Image
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
           src={product.img}
           alt={product.name}
-          sizes="384px"
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       </div>
-      <CardContent className="py-6 text-center">
-        <h3 className="mb-2 text-2xl font-semibold text-slate-700">{product.name}</h3>
-        <p className="font-medium text-gray-700">{product.text}</p>
-        <div className="flex items-center justify-between pt-4">
+
+      <CardContent className="px-4 py-4 text-center sm:py-6">
+        <h3 className="mb-2 line-clamp-1 text-lg font-semibold text-[#4B3621] sm:text-xl">
+          {product.name}
+        </h3>
+
+        <p className="line-clamp-2 text-sm font-medium leading-relaxed text-[#806B56] sm:text-base">
+          {product.text}
+        </p>
+
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4">
           {size ? (
-            <p className="font-medium text-red-600">
-              Size left: <span className="text-base font-extralight text-gray-400">{size}</span>
+            <p className="text-sm font-semibold text-[#4B3621]">
+              Size left:{" "}
+              <span className="font-normal text-[#806B56]">{size}</span>
             </p>
           ) : (
             <span />
           )}
+
           {color ? (
-            <p className="font-medium text-gray-700">
-              Color:{" "}
+            <p className="flex items-center text-sm font-medium text-[#4B3621]">
+              Color:
               <span
                 role="img"
                 aria-label={`Color ${color}`}
-                className="ml-2 inline-block size-4 rounded-full align-middle"
+                className="ml-2 inline-block size-4 rounded-full border border-[#D6B58A]"
                 style={{ backgroundColor: color }}
               />
             </p>
           ) : null}
         </div>
       </CardContent>
-      <CardFooter className="flex justify-center gap-7 pb-6 pt-2">
+
+      <CardFooter className="flex justify-center border-t border-[#E8D8C3] bg-[#F8F4ED]/50 px-4 pb-5 pt-4">
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <span className="inline-block">
+              <span className="inline-block w-full sm:w-auto">
                 <Button
                   type="button"
                   variant="outline"
                   size="lg"
+                  className="
+                    h-10 w-full
+                    border-[#D6B58A]
+                    bg-[#F8F4ED]
+                    px-5
+                    text-sm
+                    font-semibold
+                    text-[#4B3621]
+                    transition-all duration-300
+                    hover:border-[#A87945]
+                    hover:bg-[#A87945]
+                    hover:text-white
+                    focus-visible:ring-2
+                    focus-visible:ring-[#A87945]
+                    disabled:cursor-not-allowed
+                    disabled:opacity-50
+                    sm:h-11 sm:w-auto sm:text-base
+                  "
                   disabled={!canAdd}
                   aria-label={`Add ${product.name} to cart`}
                   onClick={handleAdd}
@@ -103,7 +133,12 @@ export function ProductSectionItem({ product }: ProductSectionItemProps): ReactE
                 </Button>
               </span>
             </TooltipTrigger>
-            <TooltipContent side="bottom">Add to Cart</TooltipContent>
+            <TooltipContent
+              side="bottom"
+              className="border-[#4B3621] bg-[#4B3621] text-[#F8F4ED]"
+            >
+              Add to Cart
+            </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </CardFooter>
