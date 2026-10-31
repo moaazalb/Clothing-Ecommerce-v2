@@ -1,4 +1,4 @@
-// lib/store/authSelectors.ts
+
 import type { AuthRootState } from "@/types/auth";
 import type { User } from "@/lib/validations/auth.schema";
 

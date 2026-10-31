@@ -1,4 +1,3 @@
-// lib/utils/product.ts
 import type { Product } from "@/lib/validations/product.schema";
 
 export interface DefaultSelection {

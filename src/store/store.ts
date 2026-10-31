@@ -12,6 +12,7 @@ import sliderReducer from "./slices/sliderSlice/SliderSlice";
  * @returns {AppStore} A new store with the auth (`user`), cart, products and slider slices.
  */
 export function makeStore() {
+  console.trace("makeStore called");
   return configureStore({
     reducer: {
       user: authReducer,

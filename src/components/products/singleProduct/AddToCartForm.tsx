@@ -14,6 +14,7 @@ import {
   createProductSelectionSchema,
   type ProductSelectionValues,
 } from "@/lib/validations/productSelection.schema";
+import { showSuccess } from "@/lib/utils/alerts/alerts";
 
 interface AddToCartFormProps {
   product: Product;
@@ -48,19 +49,24 @@ export function AddToCartForm({ product }: AddToCartFormProps): ReactElement {
    * @param {ProductSelectionValues} values - The validated selection.
    * @returns {void}
    */
-  const onSubmit = (values: ProductSelectionValues): void => {
-    dispatch(
-      addToCart({
-        id: product.id,
-        name: product.name,
-        img: product.img,
-        text: product.text,
-        price: product.price,
-        color: values.color,
-        ...(hasSizes ? { size: values.size } : {}),
-      })
-    );
-  };
+ const onSubmit = (values: ProductSelectionValues): void => {
+  dispatch(
+    addToCart({
+      id: product.id,
+      name: product.name,
+      img: product.img,
+      text: product.text,
+      price: product.price,
+      color: values.color,
+      ...(hasSizes ? { size: values.size } : {}),
+    })
+  );
+
+  showSuccess(
+    "Added to Cart!",
+    `${product.name} has been added to your cart.`
+  );
+};
 
   return (
     <form

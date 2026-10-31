@@ -1,7 +1,7 @@
 import reducer, { login, logout } from "./AuthSlice";
 import type { LoginPayload } from "@/lib/validations/auth.schema";
 
-const VALID_LOGIN: LoginPayload = { name: "John", password: "abc1!", image: "/john.jpg" };
+const VALID_LOGIN: LoginPayload = { name: "John", password: "abc1!"}
 const GUEST = { name: "", image: "", authUser: false };
 
 const initAction = { type: "@@INIT" };
@@ -128,7 +128,7 @@ describe("authSlice", () => {
     it("rejects a missing name instead of validating the text 'undefined'", () => {
       const state = reducer(
         undefined,
-        login({ password: "abc1!", image: "" } as LoginPayload)
+        login({ password: "abc1!" } as LoginPayload)
       );
       expect(state.user.authUser).toBe(false);
     });

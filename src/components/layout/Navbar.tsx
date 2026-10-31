@@ -14,6 +14,7 @@ import { selectUser } from "@/store/selectors/authSelectors";
 import { logout } from "@/store/slices/authSlice/AuthSlice";
 import { clearCart } from "@/store/slices/cartSlice/CartSlice";
 import { capitalizeFirst } from "@/lib/utils/string/string";
+import Link from "next/link";
 
 export function Navbar(): ReactElement {
   const { name, image } = useSelector(selectUser);
@@ -46,14 +47,14 @@ const handleLogout = (): void => {
       >
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           {/* Logo */}
-          <div className="shrink-0">
+          <Link href="/" className="shrink-0">
             <Image
               src={logo}
               alt="Store logo"
               priority
               className="h-14 w-auto object-contain sm:h-16 md:h-20"
             />
-          </div>
+          </Link>
 
           {/* Actions */}
           <div className="flex items-center gap-3 sm:gap-5 md:gap-7">

@@ -1,4 +1,3 @@
-// lib/utils/slider.ts
 import { slideIndexSchema } from "@/lib/validations/slider.schema";
 
 /**

@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { addToCart } from "@/store/slices/cartSlice/CartSlice";
 import { getDefaultSelection } from "@/lib/utils//product/product";
 import type { Product } from "@/lib/validations/product.schema";
+import { showSuccess } from "@/lib/utils/alerts/alerts";
 
 interface ProductSectionItemProps {
   product: Product;
@@ -34,20 +35,25 @@ export function ProductSectionItem({ product }: ProductSectionItemProps): ReactE
    * @returns {void}
    */
   const handleAdd = (): void => {
-    if (color === undefined) return;
+  if (color === undefined) return;
 
-    dispatch(
-      addToCart({
-        id: product.id,
-        name: product.name,
-        img: product.img,
-        text: product.text,
-        price: product.price,
-        color,
-        ...(size ? { size } : {}),
-      })
-    );
-  };
+  dispatch(
+    addToCart({
+      id: product.id,
+      name: product.name,
+      img: product.img,
+      text: product.text,
+      price: product.price,
+      color,
+      ...(size ? { size } : {}),
+    })
+  );
+
+  showSuccess(
+    "Added to Cart!",
+    `${product.name} has been added to your cart.`
+  );
+};
 
   return (
     <Card className="relative w-full max-w-sm gap-0 overflow-hidden rounded-xl border border-[#E8D8C3] bg-white py-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-[#4B3621]/10">

@@ -9,7 +9,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
 import "@/app/globals.css";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils/utils";
 
 const geist = Geist({
   subsets: ["latin"],

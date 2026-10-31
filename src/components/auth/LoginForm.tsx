@@ -1,9 +1,12 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { ReactElement } from "react";
+import { useEffect, type ReactElement } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 import { FormField } from "@/components/forms/FormField";
 import { Button } from "@/components/ui/button";
@@ -14,9 +17,14 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 
-import { login } from "@/store/slices/authSlice/AuthSlice";
 import { loginFormSchema } from "@/lib/validations/auth.schema";
 import type { LoginFormValues } from "@/lib/validations/auth.schema";
+import type { AuthRootState } from "@/types/auth";
+import {
+  login,
+  resetAuthStatus,
+} from "@/store/slices/authSlice/AuthSlice";
+import { showError, showSuccess } from "@/lib/utils/alerts/alerts";
 
 const DEFAULT_VALUES: LoginFormValues = {
   name: "",
@@ -32,7 +40,6 @@ const DEFAULT_VALUES: LoginFormValues = {
  */
 export function LoginForm(): ReactElement {
   const dispatch = useDispatch();
-
   const {
     register,
     handleSubmit,
@@ -47,11 +54,16 @@ export function LoginForm(): ReactElement {
    * Sends the validated credentials to the auth slice.
    *
    * @param {LoginFormValues} values - The validated form values.
-   * @returns {void}
+   * @returns {Promise<void>} Resolves after the login result is handled.
    */
-  const onSubmit = (values: LoginFormValues): void => {
-    dispatch(login(values));
-  };
+const onSubmit = (values: LoginFormValues): void => {
+  dispatch(
+    login({
+      name: values.name,
+      password: values.password,
+    })
+  );
+};
 
   return (
     <main className="relative grid min-h-[calc(100vh-8rem)] place-items-center overflow-hidden bg-[#F8F4ED] px-4 py-12 sm:px-6">
@@ -136,18 +148,6 @@ export function LoginForm(): ReactElement {
                 registration={register("password")}
                 error={errors.password?.message}
               />
-
-              <FormField
-                id="image"
-                label="Image URL address"
-                autoComplete="url"
-                registration={register("image")}
-                error={errors.image?.message}
-              />
-
-              <p className="-mt-2 text-xs leading-5 text-[#806B56]">
-                Your profile image is optional. You can leave this field empty.
-              </p>
             </CardContent>
 
             <CardFooter className="flex-col px-5 pt-2 pb-7 sm:px-6">
@@ -161,6 +161,16 @@ export function LoginForm(): ReactElement {
 
               <p className="mt-5 text-center text-xs leading-5 text-[#806B56]">
                 By signing in, you can continue exploring our collection.
+              </p>
+
+              <p className="mt-4 text-center text-sm text-[#806B56]">
+                Don&apos;t have an account?{" "}
+                <Link
+                  href="/signup"
+                  className="font-semibold text-[#A87945] transition-colors hover:text-[#4B3621] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#A87945] focus-visible:ring-offset-2"
+                >
+                  Create an account
+                </Link>
               </p>
             </CardFooter>
           </Card>

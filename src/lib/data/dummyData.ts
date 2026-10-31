@@ -18,7 +18,7 @@ import shirt4 from "../../../public/assets/images/t-shirt4.jpg";
 import shirt5 from "../../../public/assets/images/t-shirt5.jpg";
 import shirt6 from "../../../public/assets/images/t-shirt6.jpg";
 import shirt7 from "../../../public/assets/images/t-shirt7.jpg";
-import shirt8 from "../../.../../../public/assets/images/t-shirt8.jpg";
+import shirt8 from "../../../public/assets/images/t-shirt8.jpg";
 import hoodie1 from "../../../public/assets/images/hoodie1.jpg";
 import hoodie2 from "../../../public/assets/images/hoodie2.jpg";
 import hoodie3 from "../../../public/assets/images/hoodie3.jpg";

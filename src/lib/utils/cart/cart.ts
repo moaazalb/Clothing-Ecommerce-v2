@@ -1,4 +1,3 @@
-// lib/utils/cart.ts
 import type { CartItemKey } from "@/lib/validations/cart.schema";
 
 const CENTS = 100;
